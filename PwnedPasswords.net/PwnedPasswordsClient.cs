@@ -6,17 +6,17 @@ namespace PwnedPasswords.net
 {
     public class PwnedPasswordsClient
     {
-        private readonly string baseUrl = "https://api.pwnedpasswords.com";
-        private readonly HttpClient client = new HttpClient();
+        private readonly string _baseUrl = "https://api.pwnedpasswords.com";
+        private readonly HttpClient _client;
 
         public PwnedPasswordsClient()
         {
-            this.client = new HttpClient();
+            _client = new HttpClient();
         }
 
         public PwnedPasswordsClient(HttpClient client)
         {
-            this.client = client;
+            _client = client;
         }
 
         public bool CheckPassword(string clearPassword)
@@ -40,7 +40,7 @@ namespace PwnedPasswords.net
         private string GetPasswordHashBucket(string hashedPassword)
         {
             var hashPrefix = hashedPassword.Substring(0, 5);
-            var passwordHashes = client.GetStringAsync($"{baseUrl}/range/{hashPrefix}").Result;
+            var passwordHashes = _client.GetStringAsync($"{_baseUrl}/range/{hashPrefix}").Result;
             return passwordHashes;
         }
 
